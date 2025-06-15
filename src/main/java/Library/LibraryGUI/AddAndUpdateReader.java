@@ -9,42 +9,40 @@ import java.sql.*;
 
 public class AddAndUpdateReader {
 
-    private JPanel inputPanel = new JPanel();
-    private JPanel addPanel = new JPanel(new GridBagLayout());
-    private JPanel updatePanel = new JPanel(new GridBagLayout());
+    private final JPanel inputPanel = new JPanel();
+    private final JPanel addPanel = new JPanel(new GridBagLayout());
+    private final JPanel updatePanel = new JPanel(new GridBagLayout());
 
     // 添加部分
-    private JTextField readerIDField = new JTextField(20);
-    private JTextField firstNameField = new JTextField(20);
-    private JTextField lastNameField = new JTextField(20);
-    private JTextField addressField = new JTextField(20);
-    private JTextField phoneField = new JTextField(20);
-    private JTextField limitsField = new JTextField(20);
+    private final JTextField readerIDField = new JTextField(20);
+    private final JTextField firstNameField = new JTextField(20);
+    private final JTextField lastNameField = new JTextField(20);
+    private final JTextField addressField = new JTextField(20);
+    private final JTextField phoneField = new JTextField(20);
+    private final JTextField limitsField = new JTextField(20);
 
     // 修改部分
-    private JTextField updateIDField = new JTextField(20);
-    private JTextField updateContentField = new JTextField(20);
-    private JComboBox<String> updateCombo = new JComboBox<>(new String[]{"名字", "姓氏", "地址", "电话", "借阅上限"});
+    private final JTextField updateIDField = new JTextField(20);
+    private final JTextField updateContentField = new JTextField(20);
+    private final JComboBox<String> updateCombo = new JComboBox<>(new String[]{"名字", "姓氏", "地址", "电话", "借阅上限"});
 
     // 标签
-    private JLabel readerIDLabel = new JLabel("读者ID:");
-    private JLabel firstNameLabel = new JLabel("名:");
-    private JLabel lastNameLabel = new JLabel("姓:");
-    private JLabel addressLabel = new JLabel("地址:");
-    private JLabel phoneLabel = new JLabel("电话:");
-    private JLabel limitsLabel = new JLabel("借阅上限:");
+    private final JLabel readerIDLabel = new JLabel("读者ID:");
+    private final JLabel firstNameLabel = new JLabel("名:");
+    private final JLabel lastNameLabel = new JLabel("姓:");
+    private final JLabel addressLabel = new JLabel("地址:");
+    private final JLabel phoneLabel = new JLabel("电话:");
+    private final JLabel limitsLabel = new JLabel("借阅上限:");
 
-    private JLabel updateIDLabel = new JLabel("请输入读者ID:");
-    private JLabel updateContentLabel = new JLabel("修改内容:");
-    private JLabel updatePropertyLabel = new JLabel("修改属性:");
+    private final JLabel updateIDLabel = new JLabel("请输入读者ID:");
+    private final JLabel updateContentLabel = new JLabel("修改内容:");
+    private final JLabel updatePropertyLabel = new JLabel("修改属性:");
 
-    private JButton addButton = new JButton("添加");
-    private JButton updateButton = new JButton("修改");
 
     // 字体
-    private Font labelFont = new Font("楷体", Font.PLAIN, 24);   // 标签字体更大
-    private Font fieldFont = new Font("楷体", Font.PLAIN, 20);   // 输入框字体略小
-    private Font titleFont = new Font("楷体", Font.BOLD, 26);    // 标题字体
+    private final Font labelFont = new Font("楷体", Font.PLAIN, 24);   // 标签字体更大
+    private final Font fieldFont = new Font("楷体", Font.PLAIN, 20);   // 输入框字体略小
+    private final Font titleFont = new Font("楷体", Font.BOLD, 26);    // 标题字体
 
     public AddAndUpdateReader() {
         initializeUI();
@@ -59,8 +57,8 @@ public class AddAndUpdateReader {
                 readerIDLabel, firstNameLabel, lastNameLabel, addressLabel,
                 phoneLabel, limitsLabel, updateIDLabel, updateContentLabel,
                 updatePropertyLabel}) {
-            if (c instanceof JLabel) {
-                ((JLabel)c).setFont(labelFont);
+            if (c != null) {
+                c.setFont(labelFont);
                 ((JLabel)c).setHorizontalAlignment(SwingConstants.CENTER);
             }
         }
@@ -146,7 +144,7 @@ public class AddAndUpdateReader {
         JButton deleteButton = new JButton("删除");
         deleteButton.setFont(new Font("楷体", Font.PLAIN, 24));
         deleteButton.setMaximumSize(new Dimension(150, 40));
-        deleteButton.addActionListener(e -> deleteReader(e));
+        deleteButton.addActionListener(this::deleteReader);
 
         // 使用 FlowLayout 居中显示两个按钮
         JPanel buttonRowPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0)); // 按钮间距20
@@ -251,7 +249,7 @@ public class AddAndUpdateReader {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "借阅上限必须为数字", "错误", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             JDBCUtil.rollbackTransaction(conn);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -296,7 +294,7 @@ public class AddAndUpdateReader {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "借阅上限必须为数字", "错误", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             JDBCUtil.rollbackTransaction(conn);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -342,7 +340,7 @@ public class AddAndUpdateReader {
 
             JDBCUtil.commitTransaction(conn);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             JDBCUtil.rollbackTransaction(conn);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
         } finally {

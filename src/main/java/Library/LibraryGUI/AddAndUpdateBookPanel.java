@@ -9,45 +9,42 @@ import java.sql.*;
 
 public class AddAndUpdateBookPanel {
 
-    private JPanel inputPanel = new JPanel();
-    private JPanel addPanel = new JPanel(new GridBagLayout());
-    private JPanel updatePanel = new JPanel(new GridBagLayout());
+    private final JPanel inputPanel = new JPanel();
+    private final JPanel addPanel = new JPanel(new GridBagLayout());
+    private final JPanel updatePanel = new JPanel(new GridBagLayout());
 
     // 添加部分字段
-    private JTextField isbnField = new JTextField(20);
-    private JTextField titleField = new JTextField(20);
-    private JTextField authorField = new JTextField(20);
-    private JTextField publisherField = new JTextField(20);
-    private JTextField editionNumberField = new JTextField(20);
-    private JTextField publishDateField = new JTextField(20);
-    private JTextField typeField = new JTextField(20);
+    private final JTextField isbnField = new JTextField(20);
+    private final JTextField titleField = new JTextField(20);
+    private final JTextField authorField = new JTextField(20);
+    private final JTextField publisherField = new JTextField(20);
+    private final JTextField editionNumberField = new JTextField(20);
+    private final JTextField publishDateField = new JTextField(20);
+    private final JTextField typeField = new JTextField(20);
 
     // 修改部分字段
-    private JTextField updateISBNField = new JTextField(20);
-    private JTextField updateContentField = new JTextField(20);
-    private JComboBox<String> updateCombo = new JComboBox<>(new String[]{"书名", "作者", "出版社", "编辑", "出版日期", "种类"});
+    private final JTextField updateISBNField = new JTextField(20);
+    private final JTextField updateContentField = new JTextField(20);
+    private final JComboBox<String> updateCombo = new JComboBox<>(new String[]{"书名", "作者", "出版社", "编辑", "出版日期", "种类"});
 
     // 标签
-    private JLabel isbnLabel = new JLabel("ISBN:");
-    private JLabel titleLabel = new JLabel("书名:");
-    private JLabel authorLabel = new JLabel("作者:");
-    private JLabel publisherLabel = new JLabel("出版社:");
-    private JLabel editionNumberLabel = new JLabel("版次:");
-    private JLabel publicationDateLabel = new JLabel("出版日期:");
-    private JLabel typeLabel = new JLabel("种类:");
+    private final JLabel isbnLabel = new JLabel("ISBN:");
+    private final JLabel titleLabel = new JLabel("书名:");
+    private final JLabel authorLabel = new JLabel("作者:");
+    private final JLabel publisherLabel = new JLabel("出版社:");
+    private final JLabel editionNumberLabel = new JLabel("版次:");
+    private final JLabel publicationDateLabel = new JLabel("出版日期:");
+    private final JLabel typeLabel = new JLabel("种类:");
 
-    private JLabel updateISBNLabel = new JLabel("请输入ISBN:");
-    private JLabel updateContentLabel = new JLabel("修改的内容:");
-    private JLabel updatePropertyLabel = new JLabel("修改的属性:");
+    private final JLabel updateISBNLabel = new JLabel("请输入ISBN:");
+    private final JLabel updateContentLabel = new JLabel("修改的内容:");
+    private final JLabel updatePropertyLabel = new JLabel("修改的属性:");
 
-    private JButton addButton = new JButton("添加");
-    private JButton updateButton = new JButton("修改");
-    private JButton deleteButton = new JButton("删除");
 
     // 字体
-    private Font labelFont = new Font("楷体", Font.PLAIN, 24);   // 标签字体更大
-    private Font fieldFont = new Font("楷体", Font.PLAIN, 20);   // 输入框字体略小
-    private Font titleFont = new Font("楷体", Font.BOLD, 26);    // 面板标题字体
+    private final Font labelFont = new Font("楷体", Font.PLAIN, 24);   // 标签字体更大
+    private final Font fieldFont = new Font("楷体", Font.PLAIN, 20);   // 输入框字体略小
+    private final Font titleFont = new Font("楷体", Font.BOLD, 26);    // 面板标题字体
 
     public AddAndUpdateBookPanel() {
         initializeUI();
@@ -62,8 +59,8 @@ public class AddAndUpdateBookPanel {
                 isbnLabel, titleLabel, authorLabel, publisherLabel,
                 editionNumberLabel, publicationDateLabel, typeLabel,
                 updateISBNLabel, updateContentLabel, updatePropertyLabel}) {
-            if (c instanceof JLabel) {
-                ((JLabel)c).setFont(labelFont);
+            if (c != null) {
+                c.setFont(labelFont);
                 ((JLabel)c).setHorizontalAlignment(SwingConstants.CENTER);
             }
         }
@@ -257,7 +254,7 @@ public class AddAndUpdateBookPanel {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "版次必须为数字", "错误", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             JDBCUtil.rollbackTransaction(conn);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -297,7 +294,7 @@ public class AddAndUpdateBookPanel {
 
             JDBCUtil.commitTransaction(conn);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             JDBCUtil.rollbackTransaction(conn);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
         } finally {
@@ -344,7 +341,7 @@ public class AddAndUpdateBookPanel {
 
             JDBCUtil.commitTransaction(conn);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             JDBCUtil.rollbackTransaction(conn);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误", JOptionPane.ERROR_MESSAGE);
         } finally {
